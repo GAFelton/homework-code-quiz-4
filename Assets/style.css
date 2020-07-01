@@ -53,7 +53,8 @@ h1 {
 }
 
 #timeLeft {
-
+    padding: .3em;
+    margin: .2em;
 }
 
 .high-score {

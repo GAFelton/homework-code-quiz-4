@@ -8,6 +8,7 @@ var qButton1 = document.getElementById("questionButton1");
 var qButton2 = document.getElementById("questionButton2");
 var qButton3 = document.getElementById("questionButton3");
 var qButton4 = document.getElementById("questionButton4");
+var secondsLeft = 75;
 
 var highScore = localStorage.getItem("high-score");
 
@@ -22,6 +23,18 @@ function calcHighScore() {
     }
 }
 
+function setTime() {
+    var timerInterval = setInterval(function() {
+      secondsLeft--;
+      timeLeftSpan.textContent = secondsLeft;
+  
+      if(secondsLeft === 0) {
+        clearInterval(timerInterval);
+        // END QUIZ FUNCTION
+      }
+  
+    }, 1000);
+  }
 
 
 
