@@ -53,6 +53,7 @@ function endIntro() {
 
 function renderQuestion1() {
     questionArea.innerHTML = "";
+    questionHeader.innerHTML = "";
     questionHeader.textContent = questions.q1[0];
 
     for (var j = 1; j < q1.length in questions; j++) {

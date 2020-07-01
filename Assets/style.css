@@ -58,7 +58,7 @@ h1 {
 }
 
 .high-score {
-    display: none;
+    display: block;
 } 
 
 .header-text {
@@ -81,7 +81,7 @@ h1 {
 }
 
 .intro-box {
-    display: none;
+    display: block;
 }
 
 .question-box {
