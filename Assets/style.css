@@ -48,8 +48,12 @@ h1 {
     margin-bottom: -.3em;
 }
 
-#timeLeft {
+#hidden {
     display: none;
+}
+
+#timeLeft {
+
 }
 
 .high-score {
@@ -73,6 +77,14 @@ h1 {
     border-radius: 5px;
     padding: 1em;
     min-height: 22em;
+}
+
+.intro-box {
+    display: none;
+}
+
+.question-box {
+    display: none;
 }
 
 button {
