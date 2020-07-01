@@ -1,5 +1,6 @@
 var timeLeftSpan = document.getElementById("timeLeft");
 var highScoreSpan = document.getElementById("highScore");
+var hidden = document.getElementById("hidden");
 var introBox = document.getElementsByClassName("intro-box");
 var startButton = document.getElementById("startButton");
 var questionBox = document.getElementsByClassName("question-box");
@@ -31,7 +32,7 @@ function calcHighScore() {
     }
 }
 
-function setTime() {
+function startTimer() {
     var timerInterval = setInterval(function() {
       secondsLeft--;
       timeLeftSpan.textContent = secondsLeft;
@@ -44,11 +45,17 @@ function setTime() {
     }, 1000);
   }
 
-function renderQuestion() {
+function endIntro() {
+    introBox.setAttribute("display", "none");
+    questionBox.setAttribute("display", "block");
+    hidden.setAttribute("display", "block");
+}  
+
+function renderQuestion1() {
     questionArea.innerHTML = "";
     questionHeader.textContent = questions.q1[0];
 
-    for (var j = 1; j < questions.q1.length; j++) {
+    for (var j = 1; j < q1.length in questions; j++) {
         var question1 = questions.q1[j];
 
         var button = document.createElement("button");
@@ -58,6 +65,12 @@ function renderQuestion() {
     }
 }
 
+startButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    endIntro();
+    startTimer();
+    renderQuestion1();
+})
 
 /* CODE QUIZ PSEUDOCODE
 question storage: Array for each question. [0] is the question, [1]-[4] are the possible answers.
