@@ -11,13 +11,59 @@ var questionArea = document.getElementById("questionArea");
 // var qButton3 = document.getElementById("questionButton3");
 // var qButton4 = document.getElementById("questionButton4");
 var secondsLeft = 75;
-var questions = {
-    "q1": ["question1", "answer1", "answer2", "answer3", "answer4"],
-    "q2": ["question2", "answer1", "answer2", "answer3", "answer4"],
-    "q3": ["question3", "answer1", "answer2", "answer3", "answer4"],
-    "q4": ["question4", "answer1", "answer2", "answer3", "answer4"],
-    "q5": ["question5", "answer1", "answer2", "answer3", "answer4"]
-};
+var currentQuestionIndex = 0;
+var questions = [
+    // Question Object 1
+    {
+        questionText: "What is the color of the sky?",
+        choices: [
+            "green",
+            "blue",
+            "red"
+        ],
+        answer: 1
+    },
+        // Question Object 2
+    {
+        questionText: "What is the color of the sky?",
+        choices: [
+            "green",
+            "blue",
+            "red"
+        ],
+        answer: 2
+    },
+        // Question Object 2
+    {
+        questionText: "What is the color of the sky?",
+        choices: [
+            "green",
+            "blue",
+            "red"
+        ],
+        answer: 2
+    },
+        // Question Object 2
+    {
+        questionText: "What is the color of the sky?",
+        choices: [
+            "green",
+            "blue",
+            "red"
+        ],
+        answer: 2
+    },
+        // Question Object 2
+    {
+        questionText: "What is the color of the sky?",
+        choices: [
+            "green",
+            "blue",
+            "red"
+        ],
+        answer: 2
+    }    
+]
 
 var highScore = localStorage.getItem("high-score");
 
@@ -51,19 +97,40 @@ function endIntro() {
     hidden.setAttribute("display", "block");
 }  
 
-function renderQuestion1() {
-    questionArea.innerHTML = "";
-    questionHeader.innerHTML = "";
-    questionHeader.textContent = questions.q1[0];
+function renderQuestion(index) {
+    function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+      }
+questionArea.innerHTML = "";
 
-    for (var j = 1; j < q1.length in questions; j++) {
-        var question1 = questions.q1[j];
+var currentQuestion = question[index];
+questionHeader.textContent = currentQuestion.questionText;
+var buttons = []
+// in this kind of for loop, we can only iterate forwards. It is meant for an object or an array.
+for (var [idx, choice] of currentQuestion.choices.entries()) console.log(choice); {
+    var button = document.createElement("button");
+    button.textcontent = choice;
+    button.setAttribute("data-index", idx);
+    questionArea.appendChild(button);
 
-        var button = document.createElement("button");
-        button.textcontent = question1;
-        button.setAttribute("data-index", j);
-        questionArea.appendChild(button);
-    }
+    // Bind click listener when you create the button
+    button.addEventListener("click", handleAnswerClick)
+    ​
+            buttons.push(button)
+}
+shuffle(buttons);
+for(var button of buttons) questionArea.appendChild(button);
+
+}
+
+function handleAnswerClick(event) {
+    event.preventDefault();
+    
+    var buttonIdx = event.currentTarget.getAttribute('data-index');
+    console.log(buttonIdx);
+    // TODO - Do something with clicked index
+​
+    // Answer Validation
 }
 
 startButton.addEventListener("click", function(event) {
@@ -74,7 +141,7 @@ startButton.addEventListener("click", function(event) {
 })
 
 /* CODE QUIZ PSEUDOCODE
-question storage: Array for each question. [0] is the question, [1]-[4] are the possible answers.
+question storage: Array for each question. Each question is an object. Within each object, there are three parameters: Question, Possible Answers[], Correct Answer Index.
 
 
 on button click, start timer.
