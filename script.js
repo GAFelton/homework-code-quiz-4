@@ -1,9 +1,9 @@
 var timeLeftSpan = document.getElementById("timeLeft");
 var highScoreSpan = document.getElementById("highScore");
-var hidden = document.getElementById("hidden");
-var introBox = document.getElementsByClassName("intro-box");
+var timer = document.getElementById("timer");
+var introBox = document.querySelector(".intro-box");
 var startButton = document.getElementById("startButton");
-var questionBox = document.getElementsByClassName("question-box");
+var questionBox = document.querySelector(".question-box");
 var questionHeader = document.getElementById("questionHeader");
 var questionArea = document.getElementById("questionArea");
 // var qButton1 = document.getElementById("questionButton1");
@@ -33,7 +33,7 @@ var questions = [
         ],
         answer: 2
     },
-        // Question Object 2
+        // Question Object 3
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -43,7 +43,7 @@ var questions = [
         ],
         answer: 2
     },
-        // Question Object 2
+        // Question Object 4
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -53,7 +53,7 @@ var questions = [
         ],
         answer: 2
     },
-        // Question Object 2
+        // Question Object 5
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -93,8 +93,8 @@ function startTimer() {
 
 function endIntro() {
     introBox.setAttribute("display", "none");
-    questionBox.setAttribute("display", "block");
-    hidden.setAttribute("display", "block");
+    questionBox.setAttribute("display", "flex");
+    timer.setAttribute("display", "block");
 }  
 
 function renderQuestion(index) {
@@ -103,9 +103,9 @@ function renderQuestion(index) {
       }
 questionArea.innerHTML = "";
 
-var currentQuestion = question[index];
+var currentQuestion = questions[index];
 questionHeader.textContent = currentQuestion.questionText;
-var buttons = []
+var buttons = [];
 // in this kind of for loop, we can only iterate forwards. It is meant for an object or an array.
 for (var [idx, choice] of currentQuestion.choices.entries()) console.log(choice); {
     var button = document.createElement("button");
@@ -114,13 +114,12 @@ for (var [idx, choice] of currentQuestion.choices.entries()) console.log(choice)
     questionArea.appendChild(button);
 
     // Bind click listener when you create the button
-    button.addEventListener("click", handleAnswerClick)
-    ​
-            buttons.push(button)
+    button.addEventListener("click", handleAnswerClick);
+        buttons.push(button);
 }
 shuffle(buttons);
 for(var button of buttons) questionArea.appendChild(button);
-
+currentQuestionIndex++;
 }
 
 function handleAnswerClick(event) {
@@ -129,7 +128,6 @@ function handleAnswerClick(event) {
     var buttonIdx = event.currentTarget.getAttribute('data-index');
     console.log(buttonIdx);
     // TODO - Do something with clicked index
-​
     // Answer Validation
 }
 
@@ -137,7 +135,7 @@ startButton.addEventListener("click", function(event) {
     event.preventDefault();
     endIntro();
     startTimer();
-    renderQuestion1();
+    renderQuestion(currentQuestionIndex);
 })
 
 /* CODE QUIZ PSEUDOCODE

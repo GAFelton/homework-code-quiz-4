@@ -48,7 +48,7 @@ h1 {
     margin-bottom: -.3em;
 }
 
-#hidden {
+#timer {
     display: none;
 }
 
@@ -81,7 +81,7 @@ h1 {
 }
 
 .intro-box {
-    display: block;
+    display: flex;
 }
 
 .question-box {
