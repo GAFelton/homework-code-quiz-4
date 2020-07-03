@@ -6,10 +6,7 @@ var startButton = document.getElementById("startButton");
 var questionBox = document.querySelector(".question-box");
 var questionHeader = document.getElementById("questionHeader");
 var questionArea = document.getElementById("questionArea");
-// var qButton1 = document.getElementById("questionButton1");
-// var qButton2 = document.getElementById("questionButton2");
-// var qButton3 = document.getElementById("questionButton3");
-// var qButton4 = document.getElementById("questionButton4");
+var validationArea = document.querySelector(".textFade");
 var secondsLeft = 75;
 var currentQuestionIndex = 0;
 var questions = [
@@ -97,6 +94,35 @@ function endIntro() {
     timer.style.display = "block";
 }
 
+function rightAnswer() {
+    validationArea.style.color = ("green");
+    validationArea.textContent = ("Correct!");
+    validationArea.style.opacity = ("0");
+
+    validationArea.addEventListener("transitionend", function(){
+        validationArea.textContent = ("");
+        validationArea.style.opacity = ("1");
+    });
+}
+
+function wrongAnswer() {
+    validationArea.style.color = ("red");
+    validationArea.textContent = ("Wrong.");
+    validationArea.style.opacity = ("0");
+
+    validationArea.addEventListener("transitionend", function(){
+        validationArea.textContent = ("");
+        validationArea.style.opacity = ("1");
+    });
+}
+
+// validationArea.addEventListener("animationend", listener, false);
+
+// function listener(){
+//     validationArea.textContent = ("");
+//     validationArea.style.opacity = ("1");
+// }
+
 function renderQuestion(index) {
     function shuffle(array) {
         return array.sort(() => Math.random() - 0.5);
@@ -123,7 +149,7 @@ function renderQuestion(index) {
         questionArea.appendChild(buttons[i]);
     }
     // for(var button of buttons) questionArea.appendChild(button);
-    currentQuestionIndex++;
+
 }
 
 function handleAnswerClick(event) {
@@ -131,8 +157,19 @@ function handleAnswerClick(event) {
 
     var buttonIdx = event.currentTarget.getAttribute('data-index');
     console.log(buttonIdx);
+    console.log(questions[currentQuestionIndex].answer)
     // TODO - Do something with clicked index
+    if (buttonIdx == questions[currentQuestionIndex].answer) {
+        rightAnswer();
+    }
+    else {
+        secondsLeft = secondsLeft - 15;
+        wrongAnswer();
+
+    }
     // Answer Validation
+    currentQuestionIndex++;
+    renderQuestion(currentQuestionIndex);
 }
 
 startButton.addEventListener("click", function (event) {
@@ -141,6 +178,7 @@ startButton.addEventListener("click", function (event) {
     startTimer();
     renderQuestion(currentQuestionIndex);
 })
+
 
 /* CODE QUIZ PSEUDOCODE
 question storage: Array for each question. Each question is an object. Within each object, there are three parameters: Question, Possible Answers[], Correct Answer Index.
