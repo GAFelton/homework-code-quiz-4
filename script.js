@@ -23,7 +23,7 @@ var questions = [
         ],
         answer: 1
     },
-        // Question Object 2
+    // Question Object 2
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -33,7 +33,7 @@ var questions = [
         ],
         answer: 2
     },
-        // Question Object 3
+    // Question Object 3
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -43,7 +43,7 @@ var questions = [
         ],
         answer: 2
     },
-        // Question Object 4
+    // Question Object 4
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -53,7 +53,7 @@ var questions = [
         ],
         answer: 2
     },
-        // Question Object 5
+    // Question Object 5
     {
         questionText: "What is the color of the sky?",
         choices: [
@@ -62,7 +62,7 @@ var questions = [
             "red"
         ],
         answer: 2
-    }    
+    }
 ]
 
 var highScore = localStorage.getItem("high-score");
@@ -74,64 +74,68 @@ function calcHighScore() {
         highScoreSpan.textContent = "0";
     }
     else {
-    highScoreSpan.textContent = highScore;
+        highScoreSpan.textContent = highScore;
     }
 }
 
 function startTimer() {
-    var timerInterval = setInterval(function() {
-      secondsLeft--;
-      timeLeftSpan.textContent = secondsLeft;
-  
-      if(secondsLeft === 0) {
-        clearInterval(timerInterval);
-        // END QUIZ FUNCTION
-      }
-  
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timeLeftSpan.textContent = secondsLeft;
+
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+            // END QUIZ FUNCTION
+        }
+
     }, 1000);
-  }
+}
 
 function endIntro() {
-    introBox.setAttribute("display", "none");
-    questionBox.setAttribute("display", "flex");
-    timer.setAttribute("display", "block");
-}  
+    introBox.style.display = "none";
+    questionBox.style.display = "flex";
+    timer.style.display = "block";
+}
 
 function renderQuestion(index) {
     function shuffle(array) {
-        array.sort(() => Math.random() - 0.5);
-      }
-questionArea.innerHTML = "";
+        return array.sort(() => Math.random() - 0.5);
+    }
+    questionArea.innerHTML = "";
 
-var currentQuestion = questions[index];
-questionHeader.textContent = currentQuestion.questionText;
-var buttons = [];
-// in this kind of for loop, we can only iterate forwards. It is meant for an object or an array.
-for (var [idx, choice] of currentQuestion.choices.entries()) console.log(choice); {
-    var button = document.createElement("button");
-    button.textcontent = choice;
-    button.setAttribute("data-index", idx);
-    questionArea.appendChild(button);
+    var currentQuestion = questions[index];
+    questionHeader.textContent = currentQuestion.questionText;
+    var buttons = [];
+    // in this kind of for loop, we can only iterate forwards. It is meant for an object or an array.
+    // for (var [idx, choice] of currentQuestion.choices.entries()); 
+    for (i = 0; i < currentQuestion.choices.length; i++) {
+        var button = document.createElement("button");
+        button.textContent = currentQuestion.choices[i];
+        button.setAttribute("data-index", i);
 
-    // Bind click listener when you create the button
-    button.addEventListener("click", handleAnswerClick);
+        // Bind click listener when you create the button
+        button.addEventListener("click", handleAnswerClick);
         buttons.push(button);
-}
-shuffle(buttons);
-for(var button of buttons) questionArea.appendChild(button);
-currentQuestionIndex++;
+        console.log(buttons);
+    }
+    buttons = shuffle(buttons);
+    for (i = 0; i < buttons.length; i++) {
+        questionArea.appendChild(buttons[i]);
+    }
+    // for(var button of buttons) questionArea.appendChild(button);
+    currentQuestionIndex++;
 }
 
 function handleAnswerClick(event) {
     event.preventDefault();
-    
+
     var buttonIdx = event.currentTarget.getAttribute('data-index');
     console.log(buttonIdx);
     // TODO - Do something with clicked index
     // Answer Validation
 }
 
-startButton.addEventListener("click", function(event) {
+startButton.addEventListener("click", function (event) {
     event.preventDefault();
     endIntro();
     startTimer();

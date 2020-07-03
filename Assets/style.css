@@ -16,6 +16,10 @@ h1 {
     margin: .2em;
 }
 
+hr {
+    min-width: 100%;
+}
+
 .row::after {
     content: "";
     clear: both;
@@ -103,6 +107,11 @@ button {
 #startButton {
     margin-top: 2em;
     font-size: large;
+}
+
+#questionArea {
+    width: 100%;
+    height: auto;
 }
 
 
