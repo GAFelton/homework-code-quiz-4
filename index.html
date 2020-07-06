@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./Assets/style.css">
     <title>JS Code Quiz</title>
 </head>
+
 <body>
     <!-- Header -->
     <header class="flex-container">
@@ -25,23 +27,41 @@
     <section>
         <div class="row">
             <div class="col-3"></div>
-                <div class="col-6">
-                    <!-- Intro Box -->
-                    <div class="quiz-box intro-box flex-container-1" id="introBox">
-                        <h1 class="center-title">Welcome to the Coding Quiz!</h1>
-                        <p>Here you will be tested on your knowledge of JavaScript. You will have a certain amount of time to answer some multiple-choice questions. Each question you get wrong will reduce your time by 15 seconds. You will earn a score based on how much time is left at the end of the quiz, so be sure to answer quickly, but accurately. Ready to get started?</p>
-                        <button id="startButton">Start Quiz</button>
-                    </div>
+            
+            <div class="col-6">
+                <!-- Intro Box -->
+                <div class="quiz-box intro-box flex-container-1" id="introBox">
+                    <h1 class="center-title">Welcome to the Coding Quiz!</h1>
+                    <p>Here you will be tested on your knowledge of JavaScript. You will have a certain amount of time
+                        to answer some multiple-choice questions. Each question you get wrong will reduce your time by
+                        15 seconds. You will earn a score based on how much time is left at the end of the quiz, so be
+                        sure to answer quickly, but accurately. Ready to get started?</p>
+                    <button id="startButton">Start Quiz</button>
+                </div>
 
-                    <!-- Question Box -->
-                    <div class="quiz-box question-box flex-container-1">
-                        <h1 id="questionHeader"></h1>
-                        <hr>
-                        <div class = "flex-container-1" id="questionArea">
-                        </div>
-                        <h5 class="textFade"></h5>
+                <!-- Question Box -->
+                <div class="quiz-box question-box flex-container-1">
+                    <h1 id="questionHeader"></h1>
+                    <hr>
+                    <div class="flex-container-1" id="questionArea">
                     </div>
+                    <h5 class="textFade"></h5>
+                </div>
 
+                <!-- Fail Box -->
+                <div class="quiz-box fail-box flex-container-1" id="failBox">
+                    <h1 class="center-title">You Lose!</h1>
+                    <p>You ran out of time! Try again?</p>
+                    <button id="startButton">Start Quiz</button>
+                </div>
+                
+                <!-- Win Box -->
+                <div class="quiz-box win-box flex-container-1" id="winBox">
+                    <h1 class="center-title">You Win!</h1>
+                    <p>You've completed the quiz with a score of <span id="currentScore"></span>!</p>
+                    <form></form>
+                    <button id="enterHSButton">Submit Score</button>
+                </div>
 
                 <div class="col-3"></div>
             </div>
@@ -50,6 +70,7 @@
 
 
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

@@ -7,6 +7,9 @@ var questionBox = document.querySelector(".question-box");
 var questionHeader = document.getElementById("questionHeader");
 var questionArea = document.getElementById("questionArea");
 var validationArea = document.querySelector(".textFade");
+var failBox = document.getElementById("failBox");
+var winBox = document.getElementById("winBox");
+var currentScore = document.getElementById("currentScore");
 var secondsLeft = 75;
 var currentQuestionIndex = 0;
 var questions = [
@@ -88,10 +91,19 @@ function startTimer() {
     }, 1000);
 }
 
+// stop timer function
+
 function endIntro() {
     introBox.style.display = "none";
     questionBox.style.display = "flex";
+    failBox.style.display = "none";
+    winBox.style.display = "none";
     timer.style.display = "block";
+}
+
+//end quiz function
+function endQuiz() {
+    questionBox.style.display = "none";
 }
 
 function rightAnswer() {
@@ -121,13 +133,6 @@ function wrongAnswer() {
             validationArea.style.opacity = ("1");});
     });
 }
-
-// validationArea.addEventListener("animationend", listener, false);
-
-// function listener(){
-//     validationArea.textContent = ("");
-//     validationArea.style.opacity = ("1");
-// }
 
 function renderQuestion(index) {
     function shuffle(array) {
@@ -173,13 +178,29 @@ function handleAnswerClick(event) {
         wrongAnswer();
 
     }
-    // Answer Validation
-    currentQuestionIndex++;
-    renderQuestion(currentQuestionIndex);
+  
+    if (currentQuestionIndex < questions.index && secondsLeft > 0) {
+        currentQuestionIndex++;
+        renderQuestion(currentQuestionIndex);
+    }
+
+    else if (currentQuestionIndex == questions.index && secondsLeft > 0) {
+        // You win function
+    }
+
+    else {
+        // You lose function
+    }
 }
+
+// You win Function
+
+// You lose Function
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
+    secondsLeft = 75;
+    currentQuestionIndex = 0;
     endIntro();
     startTimer();
     renderQuestion(currentQuestionIndex);

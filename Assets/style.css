@@ -92,6 +92,14 @@ hr {
     display: none;
 }
 
+.failBox {
+    display: none;
+}
+
+.winBox {
+    display: none;
+}
+
 button {
     border: groove;
     border-color: rgb(0, 0, 148);
