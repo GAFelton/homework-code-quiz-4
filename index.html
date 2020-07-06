@@ -27,7 +27,7 @@
     <section>
         <div class="row">
             <div class="col-3"></div>
-            
+
             <div class="col-6">
                 <!-- Intro Box -->
                 <div class="quiz-box intro-box flex-container-1" id="introBox">
@@ -54,13 +54,17 @@
                     <p>You ran out of time! Try again?</p>
                     <button id="startButton">Start Quiz</button>
                 </div>
-                
+
                 <!-- Win Box -->
                 <div class="quiz-box win-box flex-container-1" id="winBox">
                     <h1 class="center-title">You Win!</h1>
                     <p>You've completed the quiz with a score of <span id="currentScore"></span>!</p>
-                    <form></form>
-                    <button id="enterHSButton">Submit Score</button>
+
+                    <form id="hs-form" method="POST" class="flex-container-1">
+                        <label for="hs-text">Add your High Score!</label>
+                        <input type="text" placeholder="Your Initials Here:" name="high-score-text" id="hs-text" />
+                        <input type="submit" id="enterHSButton" value="Submit Score" />
+                    </form>
                 </div>
 
                 <div class="col-3"></div>

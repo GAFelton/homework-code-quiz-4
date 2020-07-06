@@ -10,6 +10,8 @@ var validationArea = document.querySelector(".textFade");
 var failBox = document.getElementById("failBox");
 var winBox = document.getElementById("winBox");
 var currentScore = document.getElementById("currentScore");
+var EnterHSButton = document.getElementById("enterHSButton");
+var quizEndBoolean = false;
 var secondsLeft = 75;
 var currentQuestionIndex = 0;
 var questions = [
@@ -77,7 +79,7 @@ function calcHighScore() {
         highScoreSpan.textContent = highScore;
     }
 }
-
+var timerInterval;
 function startTimer() {
     var timerInterval = setInterval(function () {
         secondsLeft--;
@@ -90,6 +92,10 @@ function startTimer() {
             youLose();
         }
 
+        if (quizEndBoolean === true) {
+            clearInterval(timerInterval);
+            timeLeftSpan.textContent = secondsLeft + 1;
+        }
     }, 1000);
 }
 
@@ -103,6 +109,7 @@ function endIntro() {
 
 //end quiz function
 function endQuiz() {
+    quizEndBoolean = true;
     questionBox.style.display = "none";
     introBox.style.display = "none";
 }
@@ -202,22 +209,32 @@ function youWin() {
     endQuiz();
     winBox.style.display = "flex";
     failBox.style.display = "none";
+    currentScore.textContent = secondsLeft;
+    console.log(secondsLeft);
 }
 // You lose Function
 function youLose() {
     endQuiz();
     failBox.style.display = "flex";
     winBox.style.display = "none";
+    console.log(currentScore);
+    console.log(secondsLeft);
 }
+
+EnterHSButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    
+});
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
     secondsLeft = 75;
     currentQuestionIndex = 0;
+    quizEndBoolean = false;
     endIntro();
     startTimer();
     renderQuestion(currentQuestionIndex);
-})
+});
 
 
 /* CODE QUIZ PSEUDOCODE
