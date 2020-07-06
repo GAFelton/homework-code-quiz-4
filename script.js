@@ -102,6 +102,9 @@ function rightAnswer() {
     validationArea.addEventListener("transitionend", function(){
         validationArea.textContent = ("");
         validationArea.style.opacity = ("1");
+        validationArea.removeEventListener("transitionend", function(){
+            validationArea.textContent = ("");
+            validationArea.style.opacity = ("1");});
     });
 }
 
@@ -113,6 +116,9 @@ function wrongAnswer() {
     validationArea.addEventListener("transitionend", function(){
         validationArea.textContent = ("");
         validationArea.style.opacity = ("1");
+        validationArea.removeEventListener("transitionend", function(){
+            validationArea.textContent = ("");
+            validationArea.style.opacity = ("1");});
     });
 }
 
