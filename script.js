@@ -83,15 +83,15 @@ function startTimer() {
         secondsLeft--;
         timeLeftSpan.textContent = secondsLeft;
 
-        if (secondsLeft === 0) {
+        if (secondsLeft === 0 || secondsLeft < 0) {
             clearInterval(timerInterval);
+            console.log("Out of Time! Time remaining: " + secondsLeft)
             // END QUIZ FUNCTION
+            youLose();
         }
 
     }, 1000);
 }
-
-// stop timer function
 
 function endIntro() {
     introBox.style.display = "none";
@@ -104,6 +104,7 @@ function endIntro() {
 //end quiz function
 function endQuiz() {
     questionBox.style.display = "none";
+    introBox.style.display = "none";
 }
 
 function rightAnswer() {
@@ -139,7 +140,7 @@ function renderQuestion(index) {
         return array.sort(() => Math.random() - 0.5);
     }
     questionArea.innerHTML = "";
-
+    // if ();
     var currentQuestion = questions[index];
     questionHeader.textContent = currentQuestion.questionText;
     var buttons = [];
@@ -153,7 +154,6 @@ function renderQuestion(index) {
         // Bind click listener when you create the button
         button.addEventListener("click", handleAnswerClick);
         buttons.push(button);
-        console.log(buttons);
     }
     buttons = shuffle(buttons);
     for (i = 0; i < buttons.length; i++) {
@@ -167,8 +167,8 @@ function handleAnswerClick(event) {
     event.preventDefault();
 
     var buttonIdx = event.currentTarget.getAttribute('data-index');
-    console.log(buttonIdx);
-    console.log(questions[currentQuestionIndex].answer)
+    console.log("Button ID: " + buttonIdx);
+    console.log("Question ID: " + questions[currentQuestionIndex].answer)
     // TODO - Do something with clicked index
     if (buttonIdx == questions[currentQuestionIndex].answer) {
         rightAnswer();
@@ -178,24 +178,37 @@ function handleAnswerClick(event) {
         wrongAnswer();
 
     }
-  
-    if (currentQuestionIndex < questions.index && secondsLeft > 0) {
-        currentQuestionIndex++;
+    currentQuestionIndex++;
+    // End The Quiz
+    if (currentQuestionIndex < questions.length && secondsLeft > 0) {
+
         renderQuestion(currentQuestionIndex);
     }
 
-    else if (currentQuestionIndex == questions.index && secondsLeft > 0) {
+    else if (currentQuestionIndex >= questions.length && secondsLeft > 0) {
         // You win function
+        youWin();
     }
 
     else {
         // You lose function
+        youLose();
     }
 }
 
 // You win Function
-
+function youWin() {
+    // clearInterval(timerInterval);
+    endQuiz();
+    winBox.style.display = "flex";
+    failBox.style.display = "none";
+}
 // You lose Function
+function youLose() {
+    endQuiz();
+    failBox.style.display = "flex";
+    winBox.style.display = "none";
+}
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
