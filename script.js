@@ -10,11 +10,10 @@ var validationArea = document.querySelector(".textFade");
 var failBox = document.getElementById("failBox");
 var winBox = document.getElementById("winBox");
 var currentScore = document.getElementById("currentScore");
-var hsInitialsInput = document.getElementById("hsInitials");
+var hsInputForm = document.getElementById("hs-form");
 var EnterHSButton = document.getElementById("enterHSButton");
 var hsListArea = document.getElementById("hsList");
 var quizEndBoolean = false;
-var secondsLeft = questions.length * 15;
 var currentQuestionIndex = 0;
 // var questions is an array of objects. Each object is a question for the quiz, containing three properties: questionText, choices, and answer.
 var questions = [
@@ -69,6 +68,10 @@ var questions = [
         answer: 2
     }
 ]
+totalQuestions = questions.length;
+console.log("Total Questions: " + totalQuestions);
+var secondsLeft = totalQuestions * 15;
+console.log("You will have " + secondsLeft + " seconds to complete the quiz.");
 var allScores = [];
 var highScore = JSON.parse(localStorage.getItem("allScores"[0]));
 var timerInterval;
@@ -193,12 +196,12 @@ function handleAnswerClick(event) {
     }
     currentQuestionIndex++;
     // End The Quiz
-    if (currentQuestionIndex < questions.length && secondsLeft > 0) {
+    if (currentQuestionIndex < totalQuestions && secondsLeft > 0) {
 
         renderQuestion(currentQuestionIndex);
     }
 
-    else if (currentQuestionIndex >= questions.length && secondsLeft > 0) {
+    else if (currentQuestionIndex >= totalQuestions && secondsLeft > 0) {
         // You win function
         youWin();
     }
@@ -227,15 +230,19 @@ function youLose() {
     console.log(secondsLeft);
 }
 
+function storeHighScores() {
+    localStorage.setItem("allScores", JSON.stringify(allScores));
+}
+
 function renderHighScores() {
     hsListArea.innerHTML = "";
 
-    for (var i = 0; i < 5; i++) {
-        var renderScore = allScores[i];
+    for (var i = 0; i < allScores.length; i++) {
+        // console.log(allScores.initials[i] + " + " + allScores.score[i]);
+        var renderScore = allScores[i].initials + ": " + allScores[i].score;
 
         var li = document.createElement("li");
         li.textContent = renderScore;
-        li.setAttribute("data-index", i);
         hsListArea.appendChild(li);
     }
 }
@@ -249,14 +256,24 @@ function pullHighScores() {
     renderHighScores();
 }
 
-function storeHighScores() {
-    localStorage.setItem("allScores", JSON.stringify(allScores));
-}
+
+// Execute a function when the user releases a key on the keyboard
+hsInputForm.addEventListener("keydown", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      EnterHSButton.click();
+    }
+  });
 
 EnterHSButton.addEventListener("click", function (event) {
     event.preventDefault();
-    
-    var hsInitials = hsInitialsInput.value.trim().toUpperCase();
+    var hsInitialsInput = document.getElementById("hsInitialsInput").value;
+    console.log(hsInitialsInput);
+    var hsInitials = hsInitialsInput.trim().toUpperCase();
+    console.log(hsInitials.trim().toUpperCase());
     if (hsInitials === "") {
         return;
     }
@@ -266,18 +283,20 @@ EnterHSButton.addEventListener("click", function (event) {
         "score": currentScore.textContent
     }
     allScores.push(newScore);
-    hsInitialsInput.value = "";
+    hsInitialsInput = "";
     // sort by value
-    allScores.sort(function (a, b) {
-        return a.score - b.score;
-    });
+    if (allScores.length > 1) {
+        allScores.sort(function (a, b) {
+            return a.score - b.score;
+        });
+    }
     storeHighScores();
     pullHighScores();
 });
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
-    secondsLeft = questions.length * 15;
+    secondsLeft = totalQuestions * 15;
     currentQuestionIndex = 0;
     quizEndBoolean = false;
     endIntro();

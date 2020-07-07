@@ -61,13 +61,14 @@
                     <p>You've completed the quiz with a score of <span id="currentScore"></span>!</p>
 
                     <form id="hs-form" method="POST" class="flex-container-1">
-                        <label for="hs-text">Add your High Score!</label>
-                        <input type="text" placeholder="Your Initials Here:" name="high-score-text" id="hsInitials" />
-                        <input type="submit" id="enterHSButton" value="Submit Score" />
+                        <label for="hsInitialsInput">Add your High Score!</label>
+                        <input type="text" placeholder="Your Initials Here:" name="high-score-text" id="hsInitialsInput" />
+                        <input type="button" id="enterHSButton" value="Submit Score" />
                     </form>
+                    <button id="startButton">Retake Quiz</button>
                     <hr>
                     <div class="high-score-list">
-                        <h3>High Scores:</h3>
+                        <h3>Top 5 High Scores:</h3>
                         <ol id="hsList">
                             <!-- High Scores Go Here -->
                         </ol>
