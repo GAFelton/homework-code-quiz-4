@@ -11,9 +11,11 @@ var failBox = document.getElementById("failBox");
 var winBox = document.getElementById("winBox");
 var currentScore = document.getElementById("currentScore");
 var EnterHSButton = document.getElementById("enterHSButton");
+var hsListArea = document.getElementById("hsList");
 var quizEndBoolean = false;
-var secondsLeft = 75;
+var secondsLeft = questions.length * 15;
 var currentQuestionIndex = 0;
+// var questions is an array of objects. Each object is a question for the quiz, containing three properties: questionText, choices, and answer.
 var questions = [
     // Question Object 1
     {
@@ -66,8 +68,9 @@ var questions = [
         answer: 2
     }
 ]
-
+var allScores = [];
 var highScore = localStorage.getItem("high-score");
+var timerInterval;
 
 calcHighScore();
 
@@ -79,7 +82,7 @@ function calcHighScore() {
         highScoreSpan.textContent = highScore;
     }
 }
-var timerInterval;
+
 function startTimer() {
     var timerInterval = setInterval(function () {
         secondsLeft--;
@@ -221,14 +224,26 @@ function youLose() {
     console.log(secondsLeft);
 }
 
+function renderHighScores() {
+
+}
+
+function pullHighScores() {
+
+}
+
+function storeHighScores() {
+    
+}
+
 EnterHSButton.addEventListener("click", function (event) {
     event.preventDefault();
-    
+
 });
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
-    secondsLeft = 75;
+    secondsLeft = questions.length * 15;
     currentQuestionIndex = 0;
     quizEndBoolean = false;
     endIntro();
@@ -243,9 +258,9 @@ question storage: Array for each question. Each question is an object. Within ea
 
 on button click, start timer.
 display q1.
-each question has 4 possible answers. (display answers randomly?)
-on correct answer click, say "Correct" and move to the next question.
-on incorrect answer click, say "Incorrect", deduct 15 seconds from timer, and move to the next question.
+-each question has 4 possible answers. (display answers in random order)
+-on correct answer click, say "Correct" and move to the next question.
+-on incorrect answer click, say "Incorrect", deduct 15 seconds from timer, and move to the next question.
 q2
 q3
 q4

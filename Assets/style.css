@@ -114,6 +114,20 @@ button {
     font-weight: bold;
 }
 
+#enterHSButton {
+    border: groove;
+    border-color: rgb(0, 0, 148);
+    border-radius: 5px;
+    padding: .25em;
+    padding-left: .5em;
+    padding-right: .5em;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    background-color: rgb(255, 136, 0);
+    color: white;
+    font-weight: bold;
+}
+
 #startButton {
     margin-top: 2em;
     font-size: large;
