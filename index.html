@@ -26,9 +26,9 @@
     <!-- Code Quiz Box -->
     <section>
         <div class="row">
-            <div class="col-3"></div>
+            <div class="col-2"></div>
 
-            <div class="col-6">
+            <div class="col-8">
                 <!-- Intro Box -->
                 <div class="quiz-box intro-box flex-container-1" id="introBox">
                     <h1 class="center-title">Welcome to the Coding Quiz!</h1>
@@ -52,7 +52,7 @@
                 <div class="quiz-box fail-box flex-container-1" id="failBox">
                     <h1 class="center-title">You Lose!</h1>
                     <p>You ran out of time! Try again?</p>
-                    <button id="startButton">Start Quiz</button>
+                    <button class="retakeButton">Retake Quiz</button>
                 </div>
 
                 <!-- Win Box -->
@@ -62,10 +62,11 @@
 
                     <form id="hs-form" method="POST" class="flex-container-1">
                         <label for="hsInitialsInput">Add your High Score!</label>
-                        <input type="text" placeholder="Your Initials Here:" name="high-score-text" id="hsInitialsInput" />
+                        <input type="text" placeholder="Your Initials Here:" name="high-score-text"
+                            id="hsInitialsInput" />
                         <input type="button" id="enterHSButton" value="Submit Score" />
                     </form>
-                    <button id="startButton">Retake Quiz</button>
+                    <button class="retakeButton1">Retake Quiz</button>
                     <hr>
                     <div class="high-score-list">
                         <h3>Top 5 High Scores:</h3>
@@ -75,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="col-3"></div>
+                <div class="col-2"></div>
             </div>
         </div>
     </section>

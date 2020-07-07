@@ -3,6 +3,8 @@ var highScoreSpan = document.getElementById("highScore");
 var timer = document.getElementById("timer");
 var introBox = document.querySelector(".intro-box");
 var startButton = document.getElementById("startButton");
+var retakeButton = document.querySelector(".retakeButton");
+var retakeButton1 = document.querySelector(".retakeButton1");
 var questionBox = document.querySelector(".question-box");
 var questionHeader = document.getElementById("questionHeader");
 var questionArea = document.getElementById("questionArea");
@@ -19,53 +21,59 @@ var currentQuestionIndex = 0;
 var questions = [
     // Question Object 1
     {
-        questionText: "What is the color of the sky?",
+        questionText: "What is the correct syntax for referring to an external script called “thematrix.js”?",
         choices: [
-            "green",
-            "blue",
-            "red"
+            "<script src=”thematrix.js”>",
+            "<script href=”thematrix.js”>",
+            "<script ref=”thematrix.js”>",
+            "<script name=”thematrix.js”>"
         ],
-        answer: 1
+        answer: 0
     },
     // Question Object 2
     {
-        questionText: "What is the color of the sky?",
+        questionText: "How is a function called in JavaScript?",
         choices: [
-            "green",
-            "blue",
-            "red"
+            "call myFunction()",
+            "call function myFunction()",
+            "myFunction()",
+            "function myFunction()"
         ],
         answer: 2
     },
     // Question Object 3
     {
-        questionText: "What is the color of the sky?",
+        questionText: "How do you initialize an array in JavaScript?",
         choices: [
-            "green",
-            "blue",
-            "red"
+            "var matrixCharacters= “Neo”, “Trinity”, “Morpheus”",
+            "var matrixCharacters=(1:Neo, 2:Trinity, 3:Morpheus)",
+            "var matrixCharacters=(1=Neo, 2=Trinity, 3=Morpheus)",
+            "var matrixCharacters=[“Neo”, “Trinity”, “Morpheus”]"
         ],
-        answer: 2
+        answer: 3
     },
+
     // Question Object 4
     {
-        questionText: "What is the color of the sky?",
+        questionText: "Which of the following methods removes the last element from an array and returns that element?",
         choices: [
-            "green",
-            "blue",
-            "red"
+            "get()",
+            "last()",
+            "pop()",
+            "unshift()"
         ],
         answer: 2
     },
     // Question Object 5
     {
-        questionText: "What is the color of the sky?",
+        questionText: "Which of the following is the correct syntax of a FOR loop?",
         choices: [
-            "green",
-            "blue",
-            "red"
+            "for (increment; initialize; test)",
+            "for (initialize; test), increment",
+            "for (initialize; test; increment)",
+            "for (test; initialize; increment)"
         ],
-        answer: 2
+        answer: 0
     }
 ]
 totalQuestions = questions.length;
@@ -73,19 +81,8 @@ console.log("Total Questions: " + totalQuestions);
 var secondsLeft = totalQuestions * 15;
 console.log("You will have " + secondsLeft + " seconds to complete the quiz.");
 var allScores = [];
-var highScore = JSON.parse(localStorage.getItem("allScores"[0]));
 var timerInterval;
-
-calcHighScore();
-
-function calcHighScore() {
-    if (highScore === null) {
-        highScoreSpan.textContent = "0";
-    }
-    else {
-        highScoreSpan.textContent = highScore;
-    }
-}
+pullHighScores();
 
 function startTimer() {
     var timerInterval = setInterval(function () {
@@ -253,41 +250,55 @@ function pullHighScores() {
     if (storedHighScores !== null) {
         allScores = storedHighScores;
     }
+   
+    function calcHighScore() {
+        if (storedHighScores === null || storedHighScores === undefined) {
+            highScoreSpan.textContent = "0";
+        }
+        else {
+            var highScore = allScores[0].initials + ", " + allScores[0].score;
+            highScoreSpan.textContent = highScore;
+        }
+    }
+    calcHighScore();
     renderHighScores();
 }
 
 
 // Execute a function when the user releases a key on the keyboard
-hsInputForm.addEventListener("keydown", function(event) {
+hsInputForm.addEventListener("keydown", function (event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
-      // Cancel the default action, if needed
-      event.preventDefault();
-      // Trigger the button element with a click
-      EnterHSButton.click();
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        EnterHSButton.click();
     }
-  });
+});
 
 EnterHSButton.addEventListener("click", function (event) {
     event.preventDefault();
     var hsInitialsInput = document.getElementById("hsInitialsInput").value;
-    console.log(hsInitialsInput);
     var hsInitials = hsInitialsInput.trim().toUpperCase();
-    console.log(hsInitials.trim().toUpperCase());
+
     if (hsInitials === "") {
+        alert("You must enter your initials to save your high score.");
         return;
     }
-
+    console.log(hsInitials);
+    
+    // Creating new object to be stored in the array allScores.
     var newScore = {
         "initials": hsInitials,
         "score": currentScore.textContent
     }
     allScores.push(newScore);
-    hsInitialsInput = "";
-    // sort by value
+    hsInputForm.reset();
+    // hsInitialsInput.textContent = "";
+    // sort by score value
     if (allScores.length > 1) {
         allScores.sort(function (a, b) {
-            return a.score - b.score;
+            return b.score - a.score;
         });
     }
     storeHighScores();
@@ -296,14 +307,22 @@ EnterHSButton.addEventListener("click", function (event) {
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
-    secondsLeft = totalQuestions * 15;
-    currentQuestionIndex = 0;
-    quizEndBoolean = false;
+    // secondsLeft = totalQuestions * 15;
+    // currentQuestionIndex = 0;
+    // quizEndBoolean = false;
     endIntro();
     startTimer();
     renderQuestion(currentQuestionIndex);
 });
 
+retakeButton.addEventListener("click", function () {
+    console.log("retake button clicked.");
+    location.reload();
+});
+retakeButton1.addEventListener("click", function () {
+    console.log("retake button clicked.");
+    location.reload();
+});
 
 /* CODE QUIZ PSEUDOCODE
 question storage: Array for each question. Each question is an object. Within each object, there are three parameters: Question, Possible Answers[], Correct Answer Index.
