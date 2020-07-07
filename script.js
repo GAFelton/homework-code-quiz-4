@@ -14,6 +14,7 @@ var winBox = document.getElementById("winBox");
 var currentScore = document.getElementById("currentScore");
 var hsInputForm = document.getElementById("hs-form");
 var EnterHSButton = document.getElementById("enterHSButton");
+var resetHSListButton = document.getElementById("resetHSList");
 var hsListArea = document.getElementById("hsList");
 var quizEndBoolean = false;
 var currentQuestionIndex = 0;
@@ -323,6 +324,15 @@ retakeButton1.addEventListener("click", function () {
     console.log("retake button clicked.");
     location.reload();
 });
+
+resetHSListButton.addEventListener("click", function(){
+    retakeButton1.click();
+    allScores = [];
+    localStorage.clear();
+    pullHighScores();
+    
+    console.log("localStorage cleared.");
+})
 
 /* CODE QUIZ PSEUDOCODE
 question storage: Array for each question. Each question is an object. Within each object, there are three parameters: Question, Possible Answers[], Correct Answer Index.
