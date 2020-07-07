@@ -10,6 +10,7 @@ var validationArea = document.querySelector(".textFade");
 var failBox = document.getElementById("failBox");
 var winBox = document.getElementById("winBox");
 var currentScore = document.getElementById("currentScore");
+var hsInitialsInput = document.getElementById("hsInitials");
 var EnterHSButton = document.getElementById("enterHSButton");
 var hsListArea = document.getElementById("hsList");
 var quizEndBoolean = false;
@@ -69,7 +70,7 @@ var questions = [
     }
 ]
 var allScores = [];
-var highScore = localStorage.getItem("high-score");
+var highScore = JSON.parse(localStorage.getItem("allScores"[0]));
 var timerInterval;
 
 calcHighScore();
@@ -122,12 +123,13 @@ function rightAnswer() {
     validationArea.textContent = ("Correct!");
     validationArea.style.opacity = ("0");
 
-    validationArea.addEventListener("transitionend", function(){
+    validationArea.addEventListener("transitionend", function () {
         validationArea.textContent = ("");
         validationArea.style.opacity = ("1");
-        validationArea.removeEventListener("transitionend", function(){
+        validationArea.removeEventListener("transitionend", function () {
             validationArea.textContent = ("");
-            validationArea.style.opacity = ("1");});
+            validationArea.style.opacity = ("1");
+        });
     });
 }
 
@@ -136,12 +138,13 @@ function wrongAnswer() {
     validationArea.textContent = ("Wrong.");
     validationArea.style.opacity = ("0");
 
-    validationArea.addEventListener("transitionend", function(){
+    validationArea.addEventListener("transitionend", function () {
         validationArea.textContent = ("");
         validationArea.style.opacity = ("1");
-        validationArea.removeEventListener("transitionend", function(){
+        validationArea.removeEventListener("transitionend", function () {
             validationArea.textContent = ("");
-            validationArea.style.opacity = ("1");});
+            validationArea.style.opacity = ("1");
+        });
     });
 }
 
@@ -225,20 +228,51 @@ function youLose() {
 }
 
 function renderHighScores() {
+    hsListArea.innerHTML = "";
 
+    for (var i = 0; i < 5; i++) {
+        var renderScore = allScores[i];
+
+        var li = document.createElement("li");
+        li.textContent = renderScore;
+        li.setAttribute("data-index", i);
+        hsListArea.appendChild(li);
+    }
 }
 
 function pullHighScores() {
+    var storedHighScores = JSON.parse(localStorage.getItem("allScores"));
 
+    if (storedHighScores !== null) {
+        allScores = storedHighScores;
+    }
+    renderHighScores();
 }
 
 function storeHighScores() {
-    
+    localStorage.setItem("allScores", JSON.stringify(allScores));
 }
 
 EnterHSButton.addEventListener("click", function (event) {
     event.preventDefault();
+    
+    var hsInitials = hsInitialsInput.value.trim().toUpperCase();
+    if (hsInitials === "") {
+        return;
+    }
 
+    var newScore = {
+        "initials": hsInitials,
+        "score": currentScore.textContent
+    }
+    allScores.push(newScore);
+    hsInitialsInput.value = "";
+    // sort by value
+    allScores.sort(function (a, b) {
+        return a.score - b.score;
+    });
+    storeHighScores();
+    pullHighScores();
 });
 
 startButton.addEventListener("click", function (event) {
