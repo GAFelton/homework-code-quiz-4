@@ -119,19 +119,25 @@ function endQuiz() {
     introBox.style.display = "none";
 }
 
+function transitionBack() {
+    validationArea.addEventListener("transitionend", function () {
+        validationArea.textContent = ("");
+        // validationArea.style.transition = ("opacity 40ms 40ms");
+        validationArea.style.opacity = ("1");
+        validationArea.removeEventListener("transitionend", function () {
+            validationArea.textContent = ("");
+            // validationArea.style.transition = ("opacity 40ms 40ms");
+            validationArea.style.opacity = ("1");
+        });
+    })
+};
+
 function rightAnswer() {
     validationArea.style.color = ("green");
     validationArea.textContent = ("Correct!");
     validationArea.style.opacity = ("0");
 
-    validationArea.addEventListener("transitionend", function () {
-        validationArea.textContent = ("");
-        validationArea.style.opacity = ("1");
-        validationArea.removeEventListener("transitionend", function () {
-            validationArea.textContent = ("");
-            validationArea.style.opacity = ("1");
-        });
-    });
+    transitionBack();
 }
 
 function wrongAnswer() {
@@ -139,15 +145,9 @@ function wrongAnswer() {
     validationArea.textContent = ("Wrong.");
     validationArea.style.opacity = ("0");
 
-    validationArea.addEventListener("transitionend", function () {
-        validationArea.textContent = ("");
-        validationArea.style.opacity = ("1");
-        validationArea.removeEventListener("transitionend", function () {
-            validationArea.textContent = ("");
-            validationArea.style.opacity = ("1");
-        });
-    });
+    transitionBack();
 }
+
 
 function renderQuestion(index) {
     function shuffle(array) {
@@ -183,17 +183,17 @@ function handleAnswerClick(event) {
     var buttonIdx = event.currentTarget.getAttribute('data-index');
     console.log("Button ID: " + buttonIdx);
     console.log("Question ID: " + questions[currentQuestionIndex].answer)
-    // TODO - Do something with clicked index
+
     if (buttonIdx == questions[currentQuestionIndex].answer) {
         rightAnswer();
     }
     else {
         secondsLeft = secondsLeft - 15;
         wrongAnswer();
-
     }
+
     currentQuestionIndex++;
-    // End The Quiz
+    // Controlling the quiz: Either display next question, win the quiz, or lose the quiz.
     if (currentQuestionIndex < totalQuestions && secondsLeft > 0) {
 
         renderQuestion(currentQuestionIndex);
@@ -212,20 +212,19 @@ function handleAnswerClick(event) {
 
 // You win Function
 function youWin() {
-    // clearInterval(timerInterval);
     endQuiz();
     winBox.style.display = "flex";
     failBox.style.display = "none";
     currentScore.textContent = secondsLeft;
-    console.log(secondsLeft);
+    console.log(secondsLeft + " seconds remaining.");
 }
 // You lose Function
 function youLose() {
     endQuiz();
     failBox.style.display = "flex";
     winBox.style.display = "none";
-    console.log(currentScore);
-    console.log(secondsLeft);
+    console.log("Your current score is : " + currentScore);
+    console.log("You had " + secondsLeft + " seconds remaining!");
 }
 
 function storeHighScores() {
@@ -251,7 +250,7 @@ function pullHighScores() {
     if (storedHighScores !== null) {
         allScores = storedHighScores;
     }
-   
+
     function calcHighScore() {
         if (storedHighScores === null || storedHighScores === undefined) {
             highScoreSpan.textContent = "0";
@@ -265,14 +264,10 @@ function pullHighScores() {
     renderHighScores();
 }
 
-
-// Execute a function when the user releases a key on the keyboard
 hsInputForm.addEventListener("keydown", function (event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
-        // Cancel the default action, if needed
         event.preventDefault();
-        // Trigger the button element with a click
         EnterHSButton.click();
     }
 });
@@ -287,7 +282,7 @@ EnterHSButton.addEventListener("click", function (event) {
         return;
     }
     console.log(hsInitials);
-    
+
     // Creating new object to be stored in the array allScores.
     var newScore = {
         "initials": hsInitials,
@@ -295,7 +290,7 @@ EnterHSButton.addEventListener("click", function (event) {
     }
     allScores.push(newScore);
     hsInputForm.reset();
-    // hsInitialsInput.textContent = "";
+
     // sort by score value
     if (allScores.length > 1) {
         allScores.sort(function (a, b) {
@@ -308,9 +303,6 @@ EnterHSButton.addEventListener("click", function (event) {
 
 startButton.addEventListener("click", function (event) {
     event.preventDefault();
-    // secondsLeft = totalQuestions * 15;
-    // currentQuestionIndex = 0;
-    // quizEndBoolean = false;
     endIntro();
     startTimer();
     renderQuestion(currentQuestionIndex);
@@ -325,12 +317,11 @@ retakeButton1.addEventListener("click", function () {
     location.reload();
 });
 
-resetHSListButton.addEventListener("click", function(){
+resetHSListButton.addEventListener("click", function () {
     retakeButton1.click();
     allScores = [];
     localStorage.clear();
     pullHighScores();
-    
     console.log("localStorage cleared.");
 })
 
@@ -339,16 +330,17 @@ question storage: Array for each question. Each question is an object. Within ea
 
 
 on button click, start timer.
-display q1.
+display questions:
 -each question has 4 possible answers. (display answers in random order)
 -on correct answer click, say "Correct" and move to the next question.
 -on incorrect answer click, say "Incorrect", deduct 15 seconds from timer, and move to the next question.
+q1
 q2
 q3
 q4
 q5
-
+-Hard code as little as possible so that questions are easy to add/remove. Quiz duration, number of possible answers, the order randomizer are all based on quizArray.length.
 Game Over: When timer = 0 or when user completes all questions, end the quiz.
-Input form to save initials and score (to localStorage).
+Input form to save initials and score (to localStorage). Sort initials in descending order, show highest score.
 
 */
