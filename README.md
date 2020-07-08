@@ -1,4 +1,4 @@
-# Homework #4 Code Quiz
+# Homework #4: Code Quiz
 
 ## Goal:
 
@@ -37,7 +37,8 @@ Input form to save initials and score (to localStorage). Sort initials in descen
 */
 ```
 
-Big thanks to my tutor @Matthew Chen, who helped me figure out the possible answers order randomizer! After the initial setup and figuring out the data structure, my work was split into a couple main areas:
+Big thanks to my tutor @Matthew Chen, who helped me figure out the possible answers order randomizer! I'd also like to thank my brother, Peter, who helped me debug a couple tricky syntax errors. 
+After the initial setup and figuring out the data structure, my work was split into a couple main areas:
 
 * Rendering the questions & handling Answer clicks, including validation.
 * Controlling the timer, making sure it stopped when needed and translated into score.
