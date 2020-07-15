@@ -318,11 +318,11 @@ retakeButton1.addEventListener("click", function () {
 });
 
 resetHSListButton.addEventListener("click", function () {
-    retakeButton1.click();
     allScores = [];
-    localStorage.clear();
+    localStorage.clear("allScores");
     pullHighScores();
     console.log("localStorage cleared.");
+    retakeButton1.click();
 })
 
 /* CODE QUIZ PSEUDOCODE
