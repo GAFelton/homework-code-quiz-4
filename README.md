@@ -4,7 +4,7 @@
 
 To create a responsive quiz web-app that uses localStorage to hold high scores and  JavaScript functions to control the questions and buttons.
 
-![Code Quiz Screenshot](./assets/screenshot-code-quiz.jpg)
+![Code Quiz Screenshot](./Assets/screenshot-code-quiz.jpg)
 
 [Link to Deployed Page](https://gafelton.github.io/homework-code-quiz-4/)
 
